@@ -46,25 +46,12 @@ app.get('', (req, res) => {
         res.send({
             definition: definition,
             synonym: synonym,
-            translator: translation,
+            //translator: translation,
             word: req.query.word
         })
     })
  })
  //})
-
-app.get('/products', (req, res) => {
-    if (!req.query.search) {
-        return res.send({
-            error: 'You must provide a search term'
-        })
-    }
-
-    console.log(req.query.search)
-    res.send ({
-        products: []
-    })
- })
 
 app.get('*', (req, res) => {
     res.render('404', {
