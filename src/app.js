@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
-const geocode = require('./utils/geocode')
-const forecast = require('./utils/forecast')
+const dictionary = require('./utils/dictionary')
+const translator = require('./utils/translator')
 
 const app = express()
 
@@ -21,53 +21,39 @@ app.use(express.static(publicDirectoryPath))
 
 app.get('', (req, res) => {
     res.render('index', {
-        title: 'Weather',
+        title: 'Dictionary',
         name: 'Dekel Golan'
     })
 })
 
- app.get('/help', (req, res) => {
-    res.render('help', {
-        title: 'Help',
-        helpText: 'Here is some helpful text',
-        name: 'Dekel Golan'
-    })
- })
-
- app.get('/about', (req, res) => {
-    res.render('about', {
-        title: 'About Me',
-        name: 'Dekel Golan'
-    })
- })
-
- app.get('/weather',(req,res) => {
-   if (!req.query.address) {
+ app.get('/dictionary',(req,res) => {
+   if (!req.query.word) {
         return res.send({
-            error: 'You must provide a valid address'
+            error: 'You must provide a valid word'
         }) 
    }
 
-   geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+   dictionary(req.query.word, (error, { definition, synonym } = {}) => {
     if (error) {
         return res.send({ error })
     }
 
-    forecast(latitude, longitude, (error, forecastData) => {
-        if (error) {
-            return res.send({ error })
-        }
+    // translator(definition, synonym, (error, translation) => {
+    //     if (error) {
+    //         return res.send({ error })
+    //     }
 
         res.send({
-            location: location,
-            forecast: forecastData,
-            address: req.query.address
+            definition: definition,
+            synonym: synonym,
+            translator: translation,
+            word: req.query.word
         })
     })
  })
- })
+ //})
 
- app.get('/products', (req, res) => {
+app.get('/products', (req, res) => {
     if (!req.query.search) {
         return res.send({
             error: 'You must provide a search term'
@@ -79,14 +65,6 @@ app.get('', (req, res) => {
         products: []
     })
  })
-
-app.get('/help/*', (req, res) => {
-    res.render('404', {
-        title: '404',
-        errorMessage: 'Help article not found',
-        name: 'Dekel Golan'
-    })
-})
 
 app.get('*', (req, res) => {
     res.render('404', {
