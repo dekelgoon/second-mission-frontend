@@ -46,8 +46,8 @@ app.get('', (req, res) => {
         res.send({
             definition: definition,
             synonym: synonym,
-            //translator: translation,
             word: req.query.word
+            //translator: translation,
         })
     })
  })
