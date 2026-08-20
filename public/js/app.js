@@ -4,8 +4,9 @@ const dictionaryForm = document.querySelector('form')
 const search = document.querySelector('input')
 const messageOne = document.querySelector('#message-1')
 const messageTwo = document.querySelector('#message-2')
-//  const translationButton = document.getElementById('button2')
-
+const translateButton = document.getElementById('translateButton')
+const messageThree = document.querySelector('#message-3')
+const messageFour = document.querySelector('#message-4')
 
 dictionaryForm.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -14,6 +15,8 @@ dictionaryForm.addEventListener('submit', (e) => {
 
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
+    messageThree.textContent = ''
+    messageFour.textContent = ''
 
 fetch('http://localhost:3000/dictionary?word=' + word).then((response) => {
     response.json().then((data) => {
@@ -28,8 +31,8 @@ fetch('http://localhost:3000/dictionary?word=' + word).then((response) => {
     })
  })
 
-//  translationButton.addEventListener('click', (e) => {
-//     e.preventDefault()
-    
+translateButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    console.log('it worked')
 })
-// })
+})
