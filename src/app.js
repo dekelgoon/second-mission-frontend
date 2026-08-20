@@ -38,20 +38,20 @@ app.get('', (req, res) => {
         return res.send({ error })
     }
 
-    // translator(req.query.textToTranslate, (error, translation) => {
-    //     if (error) {
-    //         return res.send({ error })
-    //    }
+    translator(definition, synonym, (error, textToTranslate) => {
+        if (error) {
+            return res.send({ error })
+       }
 
         res.send({
             definition: definition,
             synonym: synonym,
-            word: req.query.word,
-            // textToTranslate: req.query.textToTranslate
+            translator: textToTranslate,
+            word: req.query.word
         })
     })
  })
- //})
+ })
 
 app.get('*', (req, res) => {
     res.render('404', {

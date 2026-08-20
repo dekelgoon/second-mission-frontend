@@ -1,10 +1,10 @@
 const axios = require('axios')
 
-const translator = (word, callback) => {
+const translator = (definition, synonym, callback) => {
     const url = 'https://api-free.deepl.com/v2/translate'
 
     axios.post(url, {
-        text: [word],
+        text: [definition, synonym],
         source_lang: 'EN',
         target_lang: 'HE'
     }, {
